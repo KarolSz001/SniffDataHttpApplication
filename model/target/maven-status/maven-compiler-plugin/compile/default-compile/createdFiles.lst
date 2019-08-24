@@ -1,0 +1,14 @@
+com\app\model\Joke.class
+com\app\model\Actor$ActorBuilder.class
+com\app\model\Country.class
+com\app\model\DictionaryPhrase$DictionaryPhraseBuilder.class
+com\app\model\Actor.class
+com\app\model\Definition$DefinitionBuilder.class
+com\app\model\Image$ImageBuilder.class
+com\app\model\Definition.class
+com\app\model\DictionaryPhrase.class
+com\app\model\Joke$JokeBuilder.class
+com\app\model\Link$Self.class
+com\app\model\Link.class
+com\app\model\Country$CountryBuilder.class
+com\app\model\Image.class
