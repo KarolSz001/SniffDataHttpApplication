@@ -23,7 +23,6 @@ download, compile and run, in module main file to compile main-1.0-SNAPSHOT-jar-
   public String establishAsyncConnection(Long idNumber) {
          String name;
          try {
- 
              final String nbpPath = "https://tvjan-tvmaze-v1.p.rapidapi.com/people/" + idNumber;
              System.out.println("\n------------------LOADING--------------------");
              CompletableFuture<HttpResponse<String>> response1 = HttpClient
@@ -31,7 +30,6 @@ download, compile and run, in module main file to compile main-1.0-SNAPSHOT-jar-
                      .proxy(ProxySelector.getDefault())
                      .build()
                      .sendAsync(requestGet(nbpPath), HttpResponse.BodyHandlers.ofString());
- 
              Gson gson = new GsonBuilder().setPrettyPrinting().create();
              Actor actor = gson.fromJson(response1.get().body(), Actor.class);
              name = actor.getName();
