@@ -19,6 +19,9 @@ public class HttpConnectionCalc implements HttpConnection {
     @Override
     public HttpRequest requestGet(final String path) throws URISyntaxException {
 
+        if (path == null) {
+            throw new MyAppException(" wrong arg in requestGet method ");
+        }
         return HttpRequest.newBuilder()
                 .uri(new URI(path))
                 .version(HttpClient.Version.HTTP_2)
@@ -30,7 +33,11 @@ public class HttpConnectionCalc implements HttpConnection {
     }
 
     public Double establishAsyncConnection(String currency) {
-        BigDecimal bd ;
+
+        if (currency == null) {
+            throw new MyAppException(" wrong arg in establishAsyncConnection method ");
+        }
+        BigDecimal bd;
         try {
             final String nbpPath = "https://currency-exchange.p.rapidapi.com/exchange?q=1.0&from=USD&to=" + currency;
             System.out.println("------------------LOADING--------------------");

@@ -19,6 +19,10 @@ public class HttpConnectionMoney implements HttpConnection {
 
     @Override
     public HttpRequest requestGet(String path) throws URISyntaxException {
+        if (path == null) {
+            throw new MyAppException(" wrong arg in requestGet method ");
+        }
+
         return HttpRequest.newBuilder()
                 .uri(new URI(path))
                 .version(HttpClient.Version.HTTP_2)

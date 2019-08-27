@@ -53,6 +53,7 @@ public class OperationService {
     }
 
     public Long operationNumberTree() {
+
         String currency = DataManager.getLine("\n>>>>>>>>>>>>>>>>>> Choose you destination we convert you money for this occasion, press shortcut from above");
         HttpConnectionCalc httpConnectionCalc = new HttpConnectionCalc();
         Double money = httpConnectionCalc.establishAsyncConnection(currency);
@@ -61,6 +62,10 @@ public class OperationService {
     }
 
     public String operationNumberFour(Long number) {
+
+        if (number == null || number < 0) {
+            throw new MyAppException(" wrong arg in operationNumberFour method ");
+        }
         System.out.println("\n>>>>>>>>>>>>>>>>>> Aver of the digits can give us number Id of actor from TV");
         System.out.println("\n>>>>>>>>>>>>>>>>>> Aver of all digits from you money is " + number + " So we are looking for actor in TV service with Id number " + number);
         HttpConnectionName httpConnectionNr4 = new HttpConnectionName();
@@ -68,11 +73,14 @@ public class OperationService {
     }
 
     public void operationNumberFive(String name) {
+
+        if (name == null) {
+            throw new MyAppException(" wrong arg in operationNumberFive method ");
+        }
         System.out.println("\n>>>>>>>>>>>>>>>>>>  Let's find out what his FirstName means, we will get definition from digits library API ");
         HttpConnectionDefine httpConnectionDefine = new HttpConnectionDefine();
         Definition definition = httpConnectionDefine.establishSyncConnection(name.split(" ")[0]);
         List<DictionaryPhrase> dictionaryPhraseList = definition.getList();
-
         System.out.println("\n>>>>>>>>>>>>>>>> Print Map with Author and Numbers of Character in Definition");
         printMapOfAuthorAndNumbersCharInDefinition(dictionaryPhraseList);
         System.out.println("\n>>>>>>>>>>>>>>>>Author of the shortest Definition is >>>>>>>>>>>>>>>> " + getAuthorOfShortestDefinition(dictionaryPhraseList));
@@ -80,6 +88,10 @@ public class OperationService {
     }
 
     private void printMapOfAuthorAndNumbersCharInDefinition(List<DictionaryPhrase> item) {
+
+        if (item == null) {
+            throw new MyAppException(" wrong arg in printMapOfAuthorAndNumbersCharInDefinition method ");
+        }
         item.stream().collect(Collectors.toMap(
                 DictionaryPhrase::getAuthor,
                 e -> getNumberOfCharInSentence(e.getDefinition())
@@ -87,6 +99,10 @@ public class OperationService {
     }
 
     private String getAuthorOfShortestDefinition(List<DictionaryPhrase> item) {
+
+        if (item == null) {
+            throw new MyAppException(" wrong arg in getAuthorOfShortestDefinition method ");
+        }
         return item.stream().collect(Collectors.toMap(
                 DictionaryPhrase::getAuthor,
                 e -> getNumberOfCharInSentence(e.getDefinition())
@@ -95,6 +111,10 @@ public class OperationService {
     }
 
     private String getShortestDefinition(List<DictionaryPhrase> item) {
+
+        if (item == null) {
+            throw new MyAppException(" wrong arg in getShortestDefinition method ");
+        }
         return item.stream().collect(Collectors.toMap(
                 DictionaryPhrase::getDefinition,
                 e -> getNumberOfCharInSentence(e.getDefinition())
@@ -103,14 +123,25 @@ public class OperationService {
     }
 
     private Long getNumberOfCharInSentence(String text) {
+
+        if (text == null) {
+            throw new MyAppException(" wrong arg in getNumberOfCharInSentence method ");
+        }
         return Arrays.stream(text.split("")).filter(this::validInputData).count();
     }
 
     private boolean validInputData(String input) {
+
+        if (input == null) {
+            throw new MyAppException(" wrong arg in validInputData method ");
+        }
         return input.matches(REGEX);
     }
 
     private static Long averNumberDigits(Double number) {
+        if (number == null) {
+            throw new MyAppException(" wrong arg in averNumberDigits method ");
+        }
         return (Arrays.stream(number.toString().split("")).filter(f -> !f.equals(".")).collect(Collectors.averagingInt(Integer::valueOf)).longValue());
     }
 }

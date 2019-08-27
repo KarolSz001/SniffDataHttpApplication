@@ -16,9 +16,10 @@ import java.time.Duration;
 
 public class HttpConnectionDefine {
 
-
     public HttpRequest requestGet(final String path) throws URISyntaxException {
-
+        if (path == null){
+            throw new MyAppException(" wrong arg in requestGet method ");
+        }
         return HttpRequest.newBuilder()
                 .uri(new URI(path))
                 .version(HttpClient.Version.HTTP_2)
@@ -30,9 +31,11 @@ public class HttpConnectionDefine {
     }
 
     public Definition establishSyncConnection(String text) {
+        if (text== null){
+            throw new MyAppException(" wrong arg in HttpConnectionDefine / establishSyncConnection method ");
+        }
         Definition definition;
         try {
-
             final String nbpPath = "https://mashape-community-urban-dictionary.p.rapidapi.com/define?term=" + text;
             System.out.println("\n------------------LOADING--------------------");
             HttpResponse<String> response1 = HttpClient
@@ -42,8 +45,7 @@ public class HttpConnectionDefine {
                     .send(requestGet(nbpPath), HttpResponse.BodyHandlers.ofString());
 
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-           definition = gson.fromJson(response1.body(), Definition.class);
-
+            definition = gson.fromJson(response1.body(), Definition.class);
 
 
         } catch (Exception e) {
@@ -51,9 +53,6 @@ public class HttpConnectionDefine {
         }
         return definition;
     }
-
-
-
 
 
 }

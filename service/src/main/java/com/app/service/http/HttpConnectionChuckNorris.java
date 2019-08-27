@@ -21,7 +21,9 @@ public class HttpConnectionChuckNorris implements HttpConnection {
 
     @Override
     public HttpRequest requestGet(final String path) throws URISyntaxException {
-
+        if (path == null){
+            throw new MyAppException(" wrong arg in requestGet method ");
+        }
         return HttpRequest.newBuilder()
                 .uri(new URI(path))
                 .version(HttpClient.Version.HTTP_2)
@@ -35,7 +37,6 @@ public class HttpConnectionChuckNorris implements HttpConnection {
 
 
     public Integer establishAsyncConnection() {
-
         String[] wordsInPhrase;
         Integer factor = 100;
 
@@ -44,10 +45,10 @@ public class HttpConnectionChuckNorris implements HttpConnection {
             final String nbpPath = "https://matchilling-chuck-norris-jokes-v1.p.rapidapi.com/jokes/random";
             System.out.println("\n------------------ LOADING --------------------");
             CompletableFuture<HttpResponse<String>> response1 = HttpClient
-                    .newBuilder()
-                    .proxy(ProxySelector.getDefault())
-                    .build()
-                    .sendAsync(requestGet(nbpPath), HttpResponse.BodyHandlers.ofString());
+                        .newBuilder()
+                        .proxy(ProxySelector.getDefault())
+                        .build()
+                        .sendAsync(requestGet(nbpPath), HttpResponse.BodyHandlers.ofString());
 
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             Joke joke = gson.fromJson(response1.get().body(), Joke.class);

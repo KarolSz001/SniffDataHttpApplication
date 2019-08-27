@@ -17,7 +17,9 @@ import java.util.concurrent.CompletableFuture;
 public class HttpConnectionName {
 
     public HttpRequest requestGet(final String path) throws URISyntaxException {
-
+        if (path == null) {
+            throw new MyAppException(" wrong arg in HttpConnectionName/ requestGet method ");
+        }
         return HttpRequest.newBuilder()
                 .uri(new URI(path))
                 .version(HttpClient.Version.HTTP_2)
@@ -29,6 +31,10 @@ public class HttpConnectionName {
     }
 
     public String establishAsyncConnection(Long idNumber) {
+        if (idNumber == null) {
+            throw new MyAppException(" wrong arg in HttpConnectionName/ establishAsyncConnection method ");
+        }
+
         String name;
         try {
 
