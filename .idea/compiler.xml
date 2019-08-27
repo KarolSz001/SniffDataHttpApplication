@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="main" />
-        <module name="model" />
+        <module name="test" />
         <module name="exception" />
-        <module name="utility" />
         <module name="service" />
+        <module name="model" />
+        <module name="utility" />
+        <module name="main" />
       </profile>
     </annotationProcessing>
   </component>

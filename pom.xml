@@ -16,6 +16,8 @@
         <module>main</module>
         <module>exception</module>
         <module>utility</module>
+        <module>test</module>
+
     </modules>
 
 
