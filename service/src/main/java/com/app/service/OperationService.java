@@ -54,10 +54,15 @@ public class OperationService {
 
     public Long operationNumberTree() {
 
-        String currency = DataManager.getLine("\n>>>>>>>>>>>>>>>>>> Choose you destination we convert you money for this occasion, press shortcut from above");
+        String currency = DataManager.getLine("\n>>>>>>>>>>>>>>>>>> Choose you destination we convert you money for this occasion, " +
+                "press shortcut from above");
         HttpConnectionCalc httpConnectionCalc = new HttpConnectionCalc();
         Double money = httpConnectionCalc.establishAsyncConnection(currency);
-        System.out.println("\n>>>>>>>>>>>>>>>>>> We convert you money from USD to " + currency + " and You have now >>> " + money + " " + currency);
+        if (money == null || money.isNaN()) {
+            throw new MyAppException(" wrong result of establishAsyncConnection method ");
+        }
+        System.out.println("\n>>>>>>>>>>>>>>>>>> We convert you money from USD to " + currency +
+                " and You have now >>> " + money + " " + currency);
         return averNumberDigits(money);
     }
 
@@ -66,8 +71,8 @@ public class OperationService {
         if (number == null || number < 0) {
             throw new MyAppException(" wrong arg in operationNumberFour method ");
         }
-        System.out.println("\n>>>>>>>>>>>>>>>>>> Aver of the digits can give us number Id of actor from TV");
-        System.out.println("\n>>>>>>>>>>>>>>>>>> Aver of all digits from you money is " + number + " So we are looking for actor in TV service with Id number " + number);
+        System.out.println("\n>>>>>>>>>>>>>>>>>> Aver number from you money is " + number +
+                " So we are looking for actor in TV service with Id number " + number);
         HttpConnectionName httpConnectionNr4 = new HttpConnectionName();
         return httpConnectionNr4.establishAsyncConnection(number);
     }
@@ -77,14 +82,24 @@ public class OperationService {
         if (name == null) {
             throw new MyAppException(" wrong arg in operationNumberFive method ");
         }
-        System.out.println("\n>>>>>>>>>>>>>>>>>>  Let's find out what his FirstName means, we will get definition from digits library API ");
-        HttpConnectionDefine httpConnectionDefine = new HttpConnectionDefine();
-        Definition definition = httpConnectionDefine.establishSyncConnection(name.split(" ")[0]);
-        List<DictionaryPhrase> dictionaryPhraseList = definition.getList();
-        System.out.println("\n>>>>>>>>>>>>>>>> Print Map with Author and Numbers of Character in Definition");
+        System.out.println("\n>>>>>>>>>>>>>>>>>> Let's find out what his FirstName means, " +
+                "we will get definition from digits library API ");
+        List<DictionaryPhrase> dictionaryPhraseList = getDictionaryPhraseList(name);
         printMapOfAuthorAndNumbersCharInDefinition(dictionaryPhraseList);
-        System.out.println("\n>>>>>>>>>>>>>>>>Author of the shortest Definition is >>>>>>>>>>>>>>>> " + getAuthorOfShortestDefinition(dictionaryPhraseList));
-        System.out.println("\n>>>>>>>>>>>>>>>>The shortest Definition is >>>>>>>>>>>>>>>> " + getShortestDefinition(dictionaryPhraseList));
+        printSolutionOfNumberFiveOperation(dictionaryPhraseList);
+    }
+
+
+    private void printSolutionOfNumberFiveOperation(List<DictionaryPhrase> item) {
+        System.out.println("\n>>>>>>>>>>>>>>>>Author of the shortest Definition is >>>" + getAuthorOfShortestDefinition(item));
+        System.out.println("\n>>>>>>>>>>>>>>>>The shortest Definition is >>>>>" + getShortestDefinition(item));
+    }
+
+    private List<DictionaryPhrase> getDictionaryPhraseList(String item) {
+
+        HttpConnectionDefine httpConnectionDefine = new HttpConnectionDefine();
+        Definition definition = httpConnectionDefine.establishSyncConnection(item.split(" ")[0]);
+        return definition.getList();
     }
 
     private void printMapOfAuthorAndNumbersCharInDefinition(List<DictionaryPhrase> item) {
@@ -92,16 +107,22 @@ public class OperationService {
         if (item == null) {
             throw new MyAppException(" wrong arg in printMapOfAuthorAndNumbersCharInDefinition method ");
         }
+        if (item.isEmpty()) {
+            throw new MyAppException(" args list is empty ");
+        }
+        System.out.println("\n>>>>>>>>>>>>>>Print Map with Author and Numbers of Character in Definition");
         item.stream().collect(Collectors.toMap(
                 DictionaryPhrase::getAuthor,
-                e -> getNumberOfCharInSentence(e.getDefinition())
-        )).forEach((k, v) -> System.out.println(k + ":::::::::::::::::" + v));
+                e -> getNumberOfCharInSentence(e.getDefinition()))).forEach((k, v) -> System.out.println(k + ":::::::::::::::::" + v));
     }
 
     private String getAuthorOfShortestDefinition(List<DictionaryPhrase> item) {
 
         if (item == null) {
             throw new MyAppException(" wrong arg in getAuthorOfShortestDefinition method ");
+        }
+        if (item.isEmpty()) {
+            throw new MyAppException(" args list is empty ");
         }
         return item.stream().collect(Collectors.toMap(
                 DictionaryPhrase::getAuthor,
@@ -114,6 +135,9 @@ public class OperationService {
 
         if (item == null) {
             throw new MyAppException(" wrong arg in getShortestDefinition method ");
+        }
+        if (item.isEmpty()) {
+            throw new MyAppException(" args list is empty ");
         }
         return item.stream().collect(Collectors.toMap(
                 DictionaryPhrase::getDefinition,

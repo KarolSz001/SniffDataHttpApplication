@@ -30,8 +30,16 @@ public class HttpConnectionName {
                 .build();
     }
 
+
+    /**
+     * Methods establish connection with free API. Get data of actor from Id number
+     * @arg Integer id Number
+     * In result user get first name of actor
+     * @return get Actor object from jason format.
+     */
+
     public String establishAsyncConnection(Long idNumber) {
-        if (idNumber == null) {
+        if (idNumber == null || idNumber <= 0) {
             throw new MyAppException(" wrong arg in HttpConnectionName/ establishAsyncConnection method ");
         }
 

@@ -16,6 +16,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class HttpConnectionCalc implements HttpConnection {
 
+
+
     @Override
     public HttpRequest requestGet(final String path) throws URISyntaxException {
 
@@ -31,6 +33,13 @@ public class HttpConnectionCalc implements HttpConnection {
                 .headers("x-rapidapi-key", "3b4c49ee50mshf8541d04cee3998p114427jsna83153e0fb64")
                 .build();
     }
+
+    /**
+     * Methods establish connection with currency API. Sending requestGet to collect data from Api
+     * @arg currency
+     * In result user get converted data of money. Convert money from USD to chosen currency by user.
+     * @return converted money in Bigdecimal format
+     */
 
     public Double establishAsyncConnection(String currency) {
 

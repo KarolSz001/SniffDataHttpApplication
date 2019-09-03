@@ -34,7 +34,12 @@ public class HttpConnectionChuckNorris implements HttpConnection {
                 .header("accept", "application/json")
                 .build();
     }
-
+    /**
+     * Methods establish connection with free API. Get random data from library of Chuck Norris jokes
+     * @arg none
+     * In result user get number of words which you have in sentenced which you get.
+     * @return number of words in sentence.
+     */
 
     public Integer establishAsyncConnection() {
         String[] wordsInPhrase;

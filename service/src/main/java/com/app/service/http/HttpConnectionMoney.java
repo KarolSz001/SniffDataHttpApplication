@@ -32,7 +32,11 @@ public class HttpConnectionMoney implements HttpConnection {
                 .headers("x-rapidapi-key", "3b4c49ee50mshf8541d04cee3998p114427jsna83153e0fb64")
                 .build();
     }
-
+    /**
+     * Methods establish connection with free API. Get definition of currency which are available in database
+     * @arg none
+     * @return get List<String> with currency shortcuts
+     */
 
     public List<String> establishAsyncConnection() {
         List<String> solution;

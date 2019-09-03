@@ -30,6 +30,13 @@ public class HttpConnectionDefine {
                 .build();
     }
 
+    /**
+     * Methods establish connection with free API. Get definition of first name as a argument from Digit Dictionary
+     * @arg String text ( first name of actor)
+     * In result user get number of words which you have in sentence
+     * @return number of words in sentence.
+     */
+
     public Definition establishSyncConnection(String text) {
         if (text== null){
             throw new MyAppException(" wrong arg in HttpConnectionDefine / establishSyncConnection method ");
